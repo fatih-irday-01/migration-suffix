@@ -1,0 +1,24 @@
+<?php
+
+use Fatihirday\Suffixed\Migrations\SuffixSchame;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Fatihirday\Suffixed\Migrations\SuffixMigration;
+
+class {{ class }}  extends SuffixMigration implements SuffixSchame
+{
+    protected $baseTableName = '{{ table }}';
+
+    public function upSuffix(string $tableName)
+    {
+        Schema::create($tableName, function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
+    }
+
+    public function downSuffix(string $tableName)
+    {
+        Schema::dropIfExists($tableName);
+    }
+}
