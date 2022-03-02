@@ -8,28 +8,41 @@ class SuffixMigration extends Migration
 {
     protected $baseTableName = null;
 
-    protected function allTable(string $method)
+    public $suffixedTable = true;
+
+    protected function allTable(callable $method)
     {
         $suffixTableCode = config('suffixed.suffixes.column');
 
         config('suffixed.suffixes.table')::select($suffixTableCode)
             ->get()
             ->pluck($suffixTableCode)
-            ->each(function ($item) use ($method) {
-                $this->$method(
-                    $this->getTableName($item)
-                );
-            });
+            ->each($method);
+    }
+
+    public function createTable(string $suffix)
+    {
+        $table = $this->getTableName($suffix);
+        $this->upSuffix($table);
+//        echo 'up table : ' . $table;
     }
 
     public function up()
     {
-        $this->allTable('upSuffix');
+        $this->allTable(function ($item) {
+            $this->upSuffix(
+                $this->getTableName($item)
+            );
+        });
     }
 
     public function down()
     {
-        $this->allTable('downSuffix');
+        $this->allTable(function ($item) {
+            $this->downSuffix(
+                $this->getTableName($item)
+            );
+        });
     }
 
     protected function getTableName(string $suffix): string

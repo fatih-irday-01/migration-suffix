@@ -16,7 +16,7 @@ class CreateSuffixesTable extends Migration
         Schema::create('suffixes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code', 3);
+            $table->string('code', config('suffixed.suffix_max_length', null));
             $table->timestamps();
         });
     }
