@@ -1,7 +1,7 @@
 {
     "name": "fatihirday/suffix",
     "description": "laravel migration suffixed tables",
-    "version": "v0.1.1",
+    "version": "v0.1.3",
     "type": "library",
     "license": "MIT",
     "authors": [
