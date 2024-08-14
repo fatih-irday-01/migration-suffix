@@ -107,16 +107,16 @@ class CreateDenemeTable  extends SuffixMigration implements SuffixSchame
 {
     protected $baseTableName = 'demo';
 
-    public function upSuffix(string $tableName)
+    public function upSuffix(string $tableName, string $prefix)
     {
-        Schema::create($tableName, function (Blueprint $table) {
+        Schema::create($tableName, function (Blueprint $table) use ($prefix)  {
             $table->id();
             $table->string('name', 30);
             $table->timestamps();
         });
     }
 
-    public function downSuffix(string $tableName)
+    public function downSuffix(string $tableName, string $prefix)
     {
         Schema::dropIfExists($tableName);
     }

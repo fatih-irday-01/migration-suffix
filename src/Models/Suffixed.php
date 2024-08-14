@@ -7,6 +7,9 @@ use \Illuminate\Database\Eloquent\Builder;
 
 trait Suffixed
 {
+    /**
+     * @var
+     */
     private $suffixCode;
 
     /**
@@ -32,16 +35,29 @@ trait Suffixed
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getSuffixCode(): string
     {
         return $this->suffixCode;
     }
 
-    public function getTable(): string
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
     {
-        return $this->table ?? Str::snake(class_basename($this));
+        return $this->table ?? Str::snake(Str::pluralStudly(class_basename($this)));
     }
 
+    /**
+     * @param Builder $query
+     * @param string $suffixCode
+     * @return bool
+     */
     public function scopeCheckSuffixCode(Builder $query, string $suffixCode): bool
     {
         $suffixTable = config('suffixed.suffixes.table');
@@ -50,6 +66,9 @@ trait Suffixed
         return ($suffixTable::where($suffixTableCode, $suffixCode)->count() !== 0);
     }
 
+    /**
+     * @return bool
+     */
     private function getSuffixedAutoCheck(): bool
     {
         return isset($this->suffix_auto_check) ?

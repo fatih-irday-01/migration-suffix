@@ -22,16 +22,15 @@ class SuffixMigration extends Migration
 
     public function createTable(string $suffix)
     {
-        $table = $this->getTableName($suffix);
-        $this->upSuffix($table);
-//        echo 'up table : ' . $table;
+        $this->upSuffix($this->getTableName($suffix), $suffix);
     }
 
     public function up()
     {
         $this->allTable(function ($item) {
             $this->upSuffix(
-                $this->getTableName($item)
+                $this->getTableName($item),
+                $item
             );
         });
     }
@@ -40,7 +39,8 @@ class SuffixMigration extends Migration
     {
         $this->allTable(function ($item) {
             $this->downSuffix(
-                $this->getTableName($item)
+                $this->getTableName($item),
+                $item
             );
         });
     }
