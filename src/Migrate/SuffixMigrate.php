@@ -62,11 +62,12 @@ class SuffixMigrate
      */
     protected function migrate(string $migrationClass)
     {
-        $class = new $migrationClass();
-        $class->suffixedTable ??= false;
+        if (class_exists($migrationClass)) {
+            $class = new $migrationClass();
 
-        if ($class->suffixedTable) {
-            $class->createTable($this->suffix);
+            if (isset($class->suffixedTable) && $class->suffixedTable === true) {
+                $class->createTable($this->suffix);
+            }
         }
     }
 

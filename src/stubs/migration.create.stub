@@ -7,18 +7,31 @@ use Fatihirday\Suffixed\Migrations\SuffixMigration;
 
 class {{ class }}  extends SuffixMigration implements SuffixSchame
 {
+    /**
+     * @var string
+     */
     protected $baseTableName = '{{ table }}';
 
-    public function upSuffix(string $tableName)
+    /**
+     * @param string $tableName
+     * @param string $prefix
+     * @return void
+     */
+    public function upSuffix(string $tableName, string $prefix)
     {
-        Schema::create($tableName, function (Blueprint $table) {
+        Schema::create($tableName, function (Blueprint $table) use ($prefix) {
             $table->id();
             $table->timestamps();
         });
     }
 
-    public function downSuffix(string $tableName)
+    /**
+     * @param string $tableName
+     * @param string $prefix
+     * @return void
+     */
+    public function downSuffix(string $tableName, string $prefix)
     {
         Schema::dropIfExists($tableName);
     }
-}
+};

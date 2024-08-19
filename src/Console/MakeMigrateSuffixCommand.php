@@ -3,8 +3,9 @@
 namespace Fatihirday\Suffixed\Console;
 
 use \Illuminate\Database\Console\Migrations\MigrateMakeCommand;
-use \Illuminate\Database\Migrations\MigrationCreator;
+use \Fatihirday\Suffixed\Databases\MigrationCreator;
 use \Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 
 class MakeMigrateSuffixCommand extends MigrateMakeCommand
 {
@@ -27,11 +28,14 @@ class MakeMigrateSuffixCommand extends MigrateMakeCommand
      */
     protected $description = 'Migration command for suffixed tables';
 
+    /**
+     * @return string
+     */
     protected function getStub()
     {
         return dirname(__DIR__) . '/stubs';
     }
-
+    
     public function __construct()
     {
         $creator = new  MigrationCreator(
